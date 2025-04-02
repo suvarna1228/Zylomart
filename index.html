@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick-Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/styles.css">
+</head>
+<body class="bg-gray-100">
+  <header>
+    <nav class="bg-purple-900 text-white p-6 sm:p-[2.5rem]">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">Quick</a>
+            <div class="flex items-center gap-6">
+                <ul class="flex space-x-6">
+                    <li class="navItem">Home</li>
+                    <li class="navItem">Shop</li>
+                    <li class="navItem">About</li>
+                    <li class="navItem">Contact</li>
+                </ul>
+                <div class="cartCount flex items-center gap-2">
+                    <i class="fa-solid fa-basket-shopping text-xl " onclick="viewcartDetails()"></i>
+                    <span id="cartQtyCount" class="text-lg">0</span>
+                </div>
+                <i class="fa-solid fa-magnifying-glass text-xl" id="searchIcon"></i>
+            </div>
+        </div>
+        <!-- Search Input Section -->
+        <div class="searchInput mt-4 sm:mt-0 hidden">
+            <div class="formDetails relative w-full max-w-[50%] mx-auto">
+                <!-- Search Input Field -->
+                <input type="text" class="formControl form-input p-2 pl-4 pr-10 rounded-md w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                       placeholder="Search Here..." id="searchInput" />
+                
+                <!-- Clear Icon (Inside Input) -->
+                <i class="fa-solid fa-xmark cursor-pointer text-gray-500 text-lg absolute right-3 top-2/3 transform -translate-y-1/2" id="clearIcon"></i>
+            </div>
+        </div>
+        <!-- Cart List View -->
+        <div class="cartListView bg-white shadow-lg rounded-lg p-4 max-w-3xl mx-auto mt-6 hidden">
+            <!-- Close Button -->
+            <div class="flex justify-end">
+                <i class="fa-solid fa-xmark text-gray-500 text-2xl cursor-pointer hover:text-red-500" onclick="closeCartDetails()" id="closeCartBtn"></i>
+            </div>
+        
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="cartTableData w-full border-collapse border border-gray-300 text-left">
+                    <thead class="bg-gray-200 text-gray-700">
+                        <tr>
+                            <th class="p-3 border border-gray-300">Product</th>
+                            <th class="p-3 border border-gray-300">Price</th>
+                            <th class="p-3 border border-gray-300">Quantity</th>
+                            <th class="p-3 border border-gray-300">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-800">
+                        <!-- Cart items will be dynamically added here -->
+                    </tbody>
+                    <tfoot class="bg-gray-100">
+                        <tr>
+                            <th colspan="2" class="p-3 text-black border border-gray-300 text-right font-semibold">Total Net Price</th>
+                            <th id="totalQuantity" class="p-3 text-black border border-gray-300"></th>
+                            <th id="totalNetPrice" class="p-3 text-black border border-gray-300"></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </nav>
+  </header>
+
+  <!-- Cart Area (Filter) -->
+  <section class="cartArea py-5">
+    <div class="filter max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col sm:flex-row items-center justify-between">
+        <!-- Category Filter -->
+        <div class="filter-item mb-4 sm:mb-0">
+            <label for="category" class="text-gray-700 font-semibold">Category</label>
+            <select id="category" class="form-select mt-2 p-2 border border-gray-300 rounded-md w-full sm:w-auto">
+                <option></option>
+            </select>
+        </div>
+        
+        <!-- Limit Filter -->
+        <div class="filter-item mb-3 sm:mb-0">
+            <label for="limit" class="text-gray-700 font-semibold">Limit</label>
+            <select id="limit" class="form-select mt-2 p-2 border border-gray-300 rounded-md w-full sm:w-auto">
+                <!-- Dynamic limits go here -->
+            </select>
+        </div>
+
+        <!-- Search Button -->
+        <button class="flex items-center justify-center bg-purple-900 text-white py-2 px-6 mt-4 sm:mt-0 rounded-md hover:bg-black transition duration-300">
+            <i class="fa-solid fa-magnifying-glass mr-2"></i> Search
+        </button>
+    </div>
+    <div class="container" id="cardList"></div>
+  </section>
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
