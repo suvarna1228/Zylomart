@@ -4,7 +4,7 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
 }
-.cartArea .container{
+/* .cartArea .container{
     height: 100%;
     padding: 1rem;
     margin: auto;
@@ -79,16 +79,207 @@
 #cardList .productDetails .productPrice .price{
     font-weight: bold;
 }
-.cartListView .productName{
+.cartListView .productName {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
+} */
+.cartArea .container {
+    height: 100%;
+    padding: 1rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
 }
-.cartListView .productName img{
-    width: 50px;
 
-}
-.cartListView .productName h5{
-    margin-left: 10px;
+.cartArea .container .singleProduct {
+    position: relative;
+    padding: 1rem;
+    width: 100%;
+    max-width: 400px;
+    height: 500px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background: #fff;
+    color: #222222;
+    cursor: pointer;
+    margin: auto;
+    transition: transform 0.3s ease-in-out;
 }
 
+.cartArea .container .singleProduct:hover {
+    transform: scale(1.05);
+}
+
+#cardList img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#cardList .productDetails {
+    width: 95%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    background: linear-gradient(to right, #6A0DAD, #8A2BE2);
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+}
+
+#cardList .productDetails h5 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#cardList .productDetails .productPrice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#cardList .productDetails .productPrice div {
+    display: flex;
+    gap: 15px;
+}
+
+#cardList .productDetails .productPrice i {
+    font-size: 20px;
+    color: black;
+    background: #fff;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+#cardList .productDetails .productPrice i:hover {
+    background: #d8b3ff;
+}
+
+#cardList .productDetails .productPrice .price {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* Cart List View Styling */
+.cartListView {
+    background: white;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.cartListView .productName {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.cartListView .productName img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.cartListView .productName h5 {
+    margin-left: 20px;
+    color: #6A0DAD;
+    font-weight: bold;
+}
+
+.cartTableData {
+    font-size: 1.2rem;
+}
+
+tfoot th {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+    .cartArea .container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .cartListView .productName {
+        font-size: 1.1rem;
+    }
+
+    .cartListView .productName img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.cartListView .productName img {
+    width:200px;  /* Increase Image Size */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+
+.cartListView .productName h5 {
+    margin-left: 25px;
+    font-size: 1.5rem; /* Bigger Text */
+    font-weight: bold;
+    color: #333; /* Darker for better readability */
+}
+
+
+
+@media (max-width: 480px) {
+    .cartArea .container {
+        grid-template-columns: 1fr; /* Single column layout for mobile */
+    }
+
+    .cartArea .container .singleProduct {
+        width: 100%;
+        height: auto;
+        padding: 1rem;
+    }
+
+    #cardList img {
+        width: 100%;
+        max-height: 180px;
+    }
+
+    #cardList .productDetails h5 {
+        font-size: 14px;
+    }
+
+    #cardList .productDetails .productPrice {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cartListView {
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    .cartListView .productName {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cartListView .productName img {
+        width: 40px;
+        margin-bottom: 5px;
+    }
+}

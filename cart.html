@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/styles.css"></link>
+</head>
+<body>
+    <header id="navbar"></header>
+    <div class="cartListView bg-white shadow-xl rounded-lg p-8 max-w-5xl mx-auto mt-12">
+        <p id="emptyMessage" class="text-center text-5xl font-extrabold text-gray-700 hidden">
+            🛒 Your cart is empty
+        </p>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="cartTableData w-full border border-black text-left">
+                <thead class="bg-purple-800 text-white text-2xl">
+                    <tr>
+                        <th class="p-6 border border-black">Product</th>
+                        <th class="p-6 border border-black">Price</th>
+                        <th class="p-6 border border-black">Quantity</th>
+                        <th class="p-6 border border-black">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-900 divide-y divide-black text-xl">
+                    <!-- Sample Cart Item -->
+                    <tr>
+                        <td class="p-6 flex items-center space-x-6 border border-black">
+                            <img src="https://via.placeholder.com/150" alt="Product" class="w-32 h-32 object-cover rounded-lg">
+                            <span class="font-bold text-2xl">Product Name</span>
+                        </td>
+                        <td class="p-6 border border-black font-semibold text-2xl">$50</td>
+                        <td class="p-6 border border-black font-semibold text-2xl">2</td>
+                        <td class="p-6 border border-black font-semibold text-2xl">$100</td>
+                    </tr>
+                </tbody>
+                <tfoot class="bg-purple-100 text-xl font-bold">
+                    <tr>
+                        <th colspan="2" class="p-6 text-gray-900 border border-black text-right">Total Net Price</th>
+                        <th id="totalQuantity" class="p-6 text-gray-900 border border-black">2</th>
+                        <th id="totalNetPrice" class="p-6 text-gray-900 border border-black">$100</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Checkout Button (Initially Hidden) -->
+        <div id="checkoutSection" class="hidden mt-8 text-center">
+            <button class="bg-purple-800 hover:bg-black text-white text-2xl font-bold py-4 px-8 rounded-lg shadow-lg">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Show checkout button only when cart is not empty
+        document.addEventListener("DOMContentLoaded", function () {
+            let cartItems = document.querySelector("tbody").children.length;
+            let emptyMessage = document.getElementById("emptyMessage");
+            let checkoutSection = document.getElementById("checkoutSection");
+
+            if (cartItems > 0) {
+                checkoutSection.classList.remove("hidden");
+            } else {
+                emptyMessage.classList.remove("hidden");
+            }
+        });
+    </script>
+    <script src="js/script.js"></script> 
+</body>
+</html>
