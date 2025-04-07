@@ -9,15 +9,15 @@
 </head>
 <body>
     <header>
-        <div class="bg-black w-full h-5"></div>
+        <div class="bg-black w-full md:h-5 h-2"></div>
         <nav class="bg-purple-900 text-black  ">
              
-            <div class="container mx-auto flex justify-between items-center">
+            <div class="container mx-auto flex flex-wrap justify-between items-center p-3 md:p-0 ">
                 
-                    <img src="assets/logo.svg" alt="ZyloMart Logo" class="h-28">
+                    <img src="assets/logo.svg" alt="ZyloMart Logo" class="h-20 md:h-28 mx-auto md:mx-0 ">
                 
                 
-                <div class="flex items-center font-bold gap-6 text-2xl">
+                <div class="flex items-center font-bold gap-2 md:gap-6 text-sm md:text-2xl">
                     <ul class="flex space-x-6">
                         <li ><a href="index.html" class="navItem">Home</a></li>
                         <li ><a href="shop.html" class="navItem">Shop</a></li>
@@ -26,7 +26,7 @@
                     </ul>
                     <div class="cartCount flex items-center gap-2">
                         <a href="cart.html">
-                        <i class="fa-solid fa-basket-shopping text-xl "  onclick="viewcartDetails()"></i>
+                        <i class="fa-solid fa-basket-shopping md:text-xl text-lg "  onclick="viewcartDetails()"></i>
                         </a>
                         <span id="cartQtyCount" class="text-lg">0</span>
                     </div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </nav>
-        <div class="bg-black w-full h-5"></div>
+        <div class="bg-black w-full md:h-5 h-2"></div>
       </header>
     <script src="js/script.js"></script> 
 </body>
