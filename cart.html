@@ -9,7 +9,7 @@
 </head>
 <body>
     <header id="navbar"></header>
-    <div class="cartListView bg-white shadow-xl rounded-lg p-8 max-w-5xl mx-auto mt-12">
+    <div id="printBill" class="cartListView bg-white shadow-xl rounded-lg p-8 max-w-5xl mx-auto mt-12 print:block">
         <p id="emptyMessage" class="text-center text-5xl font-extrabold text-gray-700 hidden">
             🛒 Your cart is empty
         </p>
@@ -29,46 +29,32 @@
                     <!-- Sample Cart Item -->
                     <tr>
                         <td class="p-6 flex items-center space-x-6 border border-black">
-                            <img src="https://via.placeholder.com/150" alt="Product" class="w-32 h-32 object-cover rounded-lg">
-                            <span class="font-bold text-2xl">Product Name</span>
+                            <img src="https://via.placeholder.com/150" alt="Product" class="w-32 h-32 object-cover rounded-lg print:hidden">
+                            <span class="font-bold text-2xl print:text-base">Product Name</span>
                         </td>
-                        <td class="p-6 border border-black font-semibold text-2xl">$50</td>
-                        <td class="p-6 border border-black font-semibold text-2xl">2</td>
-                        <td class="p-6 border border-black font-semibold text-2xl">$100</td>
+                        <td class="p-6 border border-black font-semibold text-2xl print:text-base">$00</td>
+                        <td class="p-6 border border-black font-semibold text-2xl print:text-base">0</td>
+                        <td class="p-6 border border-black font-semibold text-2xl print:text-base">$000</td>
                     </tr>
                 </tbody>
                 <tfoot class="bg-purple-100 text-xl font-bold">
                     <tr>
                         <th colspan="2" class="p-6 text-gray-900 border border-black text-right">Total Net Price</th>
-                        <th id="totalQuantity" class="p-6 text-gray-900 border border-black">2</th>
-                        <th id="totalNetPrice" class="p-6 text-gray-900 border border-black">$100</th>
+                        <th id="totalQuantity" class="p-6 text-gray-900 border border-black">0</th>
+                        <th id="totalNetPrice" class="p-6 text-gray-900 border border-black">$000</th>
                     </tr>
                 </tfoot>
             </table>
         </div>
 
         <!-- Checkout Button (Initially Hidden) -->
-        <div id="checkoutSection" class="hidden mt-8 text-center">
-            <button class="bg-purple-800 hover:bg-black text-white text-2xl font-bold py-4 px-8 rounded-lg shadow-lg">
+        <div id="checkoutSection" class="hidden mt-8 text-center   print:hidden">
+            <button  id="checkoutBtn" class="bg-purple-800 hover:bg-black text-white text-2xl font-bold py-4 px-8 rounded-lg shadow-lg">
                 Proceed to Checkout
             </button>
         </div>
     </div>
 
-    <script>
-        // Show checkout button only when cart is not empty
-        document.addEventListener("DOMContentLoaded", function () {
-            let cartItems = document.querySelector("tbody").children.length;
-            let emptyMessage = document.getElementById("emptyMessage");
-            let checkoutSection = document.getElementById("checkoutSection");
-
-            if (cartItems > 0) {
-                checkoutSection.classList.remove("hidden");
-            } else {
-                emptyMessage.classList.remove("hidden");
-            }
-        });
-    </script>
     <script src="js/script.js"></script> 
 </body>
 </html>

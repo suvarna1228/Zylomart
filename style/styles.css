@@ -283,3 +283,18 @@ tfoot th {
         margin-bottom: 5px;
     }
 }
+/* @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printBill, #printBill * {
+      visibility: visible;
+    }
+    #printBill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  } */
+  

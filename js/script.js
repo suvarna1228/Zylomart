@@ -120,16 +120,19 @@ function viewCartDetails() {
   const cartContainer = document.querySelector(".cartListView");
   const cartTable = document.querySelector(".cartTableData");
   const emptyMessage = document.getElementById("emptyMessage");
+  const checkoutSection = document.getElementById("checkoutSection");
 
   if (cartData.length === 0) {
     cartContainer.style.display = "block"; // Show the container
     cartTable.style.display = "none"; // Hide the cart table
     emptyMessage.style.display = "block"; // Show the empty cart message
+    checkoutSection.classList.add("hidden");
     return;
   } else {
     cartContainer.style.display = "block"; // Show the cart table
     cartTable.style.display = "table"; 
-    emptyMessage.style.display = "none"; // Hide empty cart message
+    emptyMessage.style.display = "none";
+    checkoutSection.classList.remove("hidden");
   }
 
   cartTableData.innerHTML = "";
@@ -146,17 +149,17 @@ function viewCartDetails() {
           <tr>
             <td>
               <div class="productName flex items-center gap-2">
-                <img src="${data.image}" alt="${data.title}" class="w-12 h-12"/>
+                <img src="${data.image}" alt="${data.title}" class="w-12 h-12  print:hidden"/>
                 <h5>${data.title}</h5>
               </div>
             </td>
-            <td>$${data.price.toFixed(2)}</td>
-            <td>
-              <button onclick="decreaseQuantity(${cartItem.Id})" class="px-2 py-1 bg-black    text-white">-</button>
-              <span class="px-3">${cartItem.Quantity}</span>
-              <button onclick="increaseQuantity(${cartItem.Id})" class="px-2 py-1 bg-black text-white">+</button>
+            <td class="text-lg print:text-sm">$${data.price.toFixed(2)}</td>
+            <td class="text-lg print:text-sm">
+              <button onclick="decreaseQuantity(${cartItem.Id})" class="px-2 py-1 bg-black    text-white print:hidden">-</button>
+              <span class="px-3 ">${cartItem.Quantity}</span>
+              <button onclick="increaseQuantity(${cartItem.Id})" class="px-2 py-1 bg-black text-white print:hidden ">+</button>
             </td>
-            <td>$${(data.price * cartItem.Quantity).toFixed(2)}</td>
+            <td class="text-lg print:text-sm">$${(data.price * cartItem.Quantity).toFixed(2)}</td>
           </tr>`;
 
         let tr = document.createElement("tr");
@@ -191,5 +194,34 @@ function decreaseQuantity(Id) {
   updateCartIcon();
   viewCartDetails(); // Refresh cart view
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const checkoutBtn = document.querySelector("#checkoutSection button");
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", function () {
+      console.log("Cart Contents:", cartData);
+    });
+  }
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const checkoutBtn = document.getElementById("checkoutBtn");
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      const printContents = document.getElementById("printBill").innerHTML;
+      const originalContents = document.body.innerHTML;
+
+      // Replace the body content with only the bill
+      document.body.innerHTML = printContents;
+
+      // Print
+      window.print();
+
+      // Restore original content
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // Reload to re-bind events
+    });
+  }
+});
 
  
