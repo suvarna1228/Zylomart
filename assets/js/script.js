@@ -5,7 +5,7 @@ const header = document.querySelector("header"),
   totalQuantity = document.getElementById("totalQuantity"),
   totalNetPrice = document.getElementById("totalNetPrice"),
   category = document.getElementById("category"),
-  limit = document.getElementById("limit"),
+  searchBtn = document.getElementById('searchBtn'),
   searchProduct = document.getElementById("searchIcon"),
   searchInput = document.querySelector(".searchInput"),
   closeSearchInput = document.getElementById("clearIcon"),
@@ -18,19 +18,25 @@ let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 fetch("navbar.html")
   .then(response => response.text())
   .then(data => {
-    document.getElementById("navbar").innerHTML = data;
-    attachCartIconEvent();
-    updateCartIcon(); // Call AFTER navbar loads
+    const navbar = document.getElementById("navbar");
+    if (navbar) {
+      navbar.innerHTML = data;
+      attachCartIconEvent();
+      updateCartIcon();
+    }
   });
 
   
   document.addEventListener("DOMContentLoaded", function () {
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
-
-    menuToggle.addEventListener("click", function () {
+    
+    if (menuToggle && navMenu){
+      menuToggle.addEventListener("click", function () {
         navMenu.classList.toggle("hidden"); // Show/hide the menu
     });
+    }
+
 });
 
 function attachCartIconEvent() {
@@ -47,6 +53,7 @@ window.addEventListener("load", () => {
   fetch(APIUrl + "/categories")
     .then(response => response.json())
     .then(data => {
+      if (!category) return;
       data.forEach(item => {
         let option = document.createElement("option");
         option.value = item;
@@ -66,6 +73,7 @@ function loadProducts() {
   fetch(APIUrl)
     .then(response => response.json())
     .then(data => {
+      if (!cardList) return;
       cardList.innerHTML = "";
       data.forEach(product => {
         let cartItem = `
@@ -88,6 +96,60 @@ function loadProducts() {
       });
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const searchBtn = document.getElementById("searchBtn");
+  const category = document.getElementById("category");
+  const cardList = document.getElementById("cardList"); 
+  const APIUrl = "https://fakestoreapi.com/products"; // replace with your real API if different
+
+  if (searchBtn) {
+    searchBtn.addEventListener("click", function () {
+      const selectedCategory = category.value;
+
+      if (selectedCategory === "") {
+        alert("Please select a category first.");
+        return;
+      }
+
+      // Fetch products based on the selected category
+      fetch(`${APIUrl}/category/${selectedCategory}`)
+        .then(response => response.json())
+        .then(filteredProducts => {
+          cardList.innerHTML = ""; // Clear current list
+          if (filteredProducts.length === 0) {
+            cardList.innerHTML = "<p>No products found for the selected category.</p>";
+          } else {
+            filteredProducts.forEach(product => {
+              let cartItem = `
+                <div class="singleProduct">
+                  <div class="images">
+                    <img src="${product.image}" alt="${product.title}" />
+                  </div>
+                  <div class="productDetails">
+                    <h5>${product.title}</h5>
+                    <div class="productPrice">
+                      <span class="price">$${product.price.toFixed(2)}</span>
+                      <div>
+                        <i class="fa-regular fa-heart"></i>
+                        <i class="fa-solid fa-plus" onclick="addToCart(${product.id}, 1)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+              cardList.innerHTML += cartItem;
+            });
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching category:", error);
+        });
+    });
+  } else {
+    console.warn("hi");
+  }
+});
+
 
 // Add to Cart
 function addToCart(Id, Quantity) {
@@ -149,7 +211,7 @@ function viewCartDetails() {
           <tr>
             <td>
               <div class="productName flex items-center gap-2">
-                <img src="${data.image}" alt="${data.title}" class="w-12 h-12  print:hidden"/>
+                <img src="${data.image}" alt="${data.title}" onerror="this.onerror=null; this.src='fallback.jpeg'"  class="w-12 h-12  print:hidden"/>
                 <h5>${data.title}</h5>
               </div>
             </td>
