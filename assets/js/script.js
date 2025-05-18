@@ -75,27 +75,44 @@ function loadProducts() {
     .then(data => {
       if (!cardList) return;
       cardList.innerHTML = "";
+
       data.forEach(product => {
-        let cartItem = `
-          <div class="singleProduct">
-            <div class="images">
-              <img src="${product.image}" alt="${product.title}"/>
-            </div>
-            <div class="productDetails">
-              <h5>${product.title}</h5>
-              <div class="productPrice">
-                <span class="price">$${product.price.toFixed(2)}</span>
-                <div>
-                  <i class="fa-regular fa-heart"></i>
-                  <i class="fa-solid fa-plus" onclick="addToCart(${product.id}, 1)"></i>
-                </div>
+        let cartItem = document.createElement("div");
+        cartItem.classList.add("singleProduct");
+
+        cartItem.innerHTML = `
+          <div class="images">
+            <img src="${product.image}" alt="${product.title}" />
+          </div>
+          <div class="productDetails">
+            <h5>${product.title}</h5>
+            <div class="productPrice">
+              <span class="price">$${product.price.toFixed(2)}</span>
+              <div>
+                
+                <i class="fa-solid fa-plus add-to-cart" title="Add to cart"></i>
               </div>
             </div>
           </div>`;
-        cardList.innerHTML += cartItem;
+
+        // Add to cart button click event
+        const addToCartBtn = cartItem.querySelector(".add-to-cart");
+        addToCartBtn.addEventListener("click", (e) => {
+          e.stopPropagation();  // Prevent triggering card click event
+          addToCart(product.id, 1);
+        });
+
+        // Clicking elsewhere on card opens product view
+        cartItem.addEventListener("click", () => {
+          localStorage.setItem("selectedProduct", JSON.stringify(product));
+          window.location.href = "product.html";
+        });
+
+        cardList.appendChild(cartItem);
       });
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const searchBtn = document.getElementById("searchBtn");
@@ -156,9 +173,11 @@ function addToCart(Id, Quantity) {
   let productExists = cartData.find(item => item.Id === Id);
 
   if (productExists) {
+    showToast("Item already in the cart so incresed the qyantity by one !");
     productExists.Quantity += Quantity;
   } else {
     cartData.push({ Id, Quantity });
+    showToast("Item Added to cart");
   }
 
   localStorage.setItem("cartData", JSON.stringify(cartData)); 
@@ -237,6 +256,7 @@ function viewCartDetails() {
 function increaseQuantity(Id) {
   let product = cartData.find(item => item.Id === Id);
   if (product) {
+    showToast("Item quantity incresed");
     product.Quantity += 1;
   }
   localStorage.setItem("cartData", JSON.stringify(cartData));
@@ -247,6 +267,7 @@ function decreaseQuantity(Id) {
   let productIndex = cartData.findIndex(item => item.Id === Id);
   if (productIndex !== -1) {
     if (cartData[productIndex].Quantity > 1) {
+      showToast("Item quantity decresed");
       cartData[productIndex].Quantity -= 1;
     } else {
       cartData.splice(productIndex, 1); // Remove item if quantity is 1
@@ -285,5 +306,39 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+function showToast(message) {
+  // Create toast container if not exists
+  let toastContainer = document.getElementById("toastContainer");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.id = "toastContainer";
+    toastContainer.style.position = "fixed";
+    toastContainer.style.bottom = "20px";
+    toastContainer.style.right = "20px";
+    toastContainer.style.zIndex = "9999";
+    document.body.appendChild(toastContainer);
+  }
+
+  // Create toast message
+  const toast = document.createElement("div");
+  toast.innerText = message;
+  toast.style.background = "rgba(0,0,0,0.8)";
+  toast.style.color = "white";
+  toast.style.padding = "10px 20px";
+  toast.style.marginTop = "10px";
+  toast.style.borderRadius = "5px";
+  toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.3)";
+  toast.style.fontSize = "14px";
+  toast.style.opacity = "1";
+  toast.style.transition = "opacity 0.5s ease";
+
+  toastContainer.appendChild(toast);
+
+  // Remove toast after 3 seconds
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500);
+  }, 3000);
+}
 
  
