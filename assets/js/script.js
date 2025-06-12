@@ -103,10 +103,11 @@ function loadProducts() {
         });
 
         // Clicking elsewhere on card opens product view
-        cartItem.addEventListener("click", () => {
-          localStorage.setItem("selectedProduct", JSON.stringify(product));
-          window.location.href = "product.html";
-        });
+cartItem.addEventListener("click", () => {
+  window.open(`product.html?id=${product.id}`, "_blank");
+});
+
+
 
         cardList.appendChild(cartItem);
       });
