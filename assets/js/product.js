@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <p class="mb-4">${product.description}</p>
     <p class="text-xl font-semibold mb-4">$${product.price}</p>
     <div class="flex gap-4 flex-wrap">
-      <button id="backtoShopebtn" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-black">Back To Shop</button>
-      <button onclick="addToCart(${product.id}, 1)" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-black">Add to Cart</button>
-      <button id="shareBtn" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-black">🔗 Share</button>
+      <button id="backtoShopebtn" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-purple-600">Back To Shop</button>
+      <button onclick="addToCart(${product.id}, 1)" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-purple-600">Add to Cart</button>
+      <button id="shareBtn" class="bg-purple-800 text-black px-6 py-3 rounded hover:bg-purple-600">🔗 Share</button>
     </div>
   </div>
 `;
